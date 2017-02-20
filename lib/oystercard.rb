@@ -8,8 +8,7 @@ MAX_VALUE = 90
   end
 
   def top_up(value)
-    if (@balance < MAX_VALUE) && (@balance + value) <= MAX_VALUE then @balance += value
-    else  fail "You have reached the maximum balance of £#{MAX_VALUE}"
-    end
+    fail "You have reached the maximum balance of £#{MAX_VALUE}" if value + balance > MAX_VALUE
+    @balance += value
   end
 end
