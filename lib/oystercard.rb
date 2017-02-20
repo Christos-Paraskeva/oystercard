@@ -11,4 +11,8 @@ MAX_VALUE = 90
     fail "You have reached the maximum balance of £#{MAX_VALUE}" if value + balance > MAX_VALUE
     @balance += value
   end
+
+  def deduct(amount)
+    @balance -= amount
+  end
 end
