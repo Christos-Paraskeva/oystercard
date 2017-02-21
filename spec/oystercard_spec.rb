@@ -1,6 +1,6 @@
 require 'oystercard'
 
-describe OysterCard do
+describe Oystercard do
   it "has a balance of 0" do
     expect(subject.balance).to eq 0
   end
@@ -11,7 +11,7 @@ describe OysterCard do
   end
 
   it 'gives an error when trying to top-up beyond max value' do
-    max_balance = OysterCard::MAX_VALUE
+    max_balance = Oystercard::MAX_VALUE
     error = "You have reached the maximum balance of £#{max_balance}"
     expect{subject.top_up(max_balance + 1)}.to raise_error error
   end
