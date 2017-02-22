@@ -1,7 +1,10 @@
 require 'oystercard'
+require 'station'
 
 describe Oystercard do
-  let(:station) { double :station }
+  let(:entry_station) { double(:station) }
+  let(:exit_station) {double(:station) }
+
   it "has a balance of 0" do
     expect(subject.balance).to eq 0
   end
@@ -23,28 +26,37 @@ describe Oystercard do
 
   it 'card has been touched in', :in => true do
     subject.top_up(2)
-    subject.touch_in
+    subject.touch_in(entry_station)
     expect(subject).to be_in_journey
   end
 
   it 'does not let you touch in when balance is below £1', :low => true do
-    expect {subject.touch_in}.to raise_error 'You have insufficient funds'
+    expect {subject.touch_in(entry_station)}.to raise_error 'You have insufficient funds'
   end
 
   it 'deducts the fare money when touching out', :deduct => true do
     subject.top_up(5)
-    expect {subject.touch_out}.to change{subject.balance}.by(-1)
+    expect {subject.touch_out(exit_station)}.to change{subject.balance}.by(-1)
   end
 
-  # it "returns the specified value on any instance of the class" do
-  #   Object.any_instance.stub(:foo).and_return(:return_value)
-  #
-  #   o = Object.new
-  #   o.foo.should eq(:return_value)
-  it 'saves the entry station on touch_in' do
-    Station.new.any_instance.stub(:station).and_return(:station_instance)
+  it 'saves the entry station on touch_in', :entry => true do
     subject.top_up(5)
+    expect(subject.touch_in(entry_station)).to eq entry_station
+  end
 
-    expect{subject.touch_in}.to change{subject.station}.to(subject.station)
+  it 'resets station on touch_out' do
+    subject.top_up(10)
+    subject.touch_in(entry_station)
+    subject.touch_out(exit_station)
+    expect(subject.station).to eq nil
+  end
+
+  it 'checks touching in adds the entry station to hash', :start => true do
+    # allow(entry_station).to receive(:name).and_return('Highbury')
+    # allow(exit_station).to receive(:name).and_return('Liverpool Street')
+    subject.top_up(5)
+    subject.touch_in(entry_station)
+    subject.touch_out(exit_station)
+    expect(subject.station_history).to eq [{entry_station => exit_station }]
   end
 end
