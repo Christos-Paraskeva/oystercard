@@ -45,13 +45,11 @@ describe Oystercard do
     expect(oystercard.touch_out(exit_station)).to eq 9
   end
 
-  it 'penalty fare is deducted if there is no entry station on exit', :penalty => true do
+  it 'penalty fare is deducted if there is no entry station on exit', :penalty do
     oystercard.top_up(10)
-    #journey = Journey.new(nil)
-    # allow(journey).to receive(:entry_station).and_return(nil)
-    oystercard.touch_in(nil)
+    oystercard.touch_in
     oystercard.touch_out(:exit_station)
-    expect(oystercard.balance).to eq 4
+    expect(oystercard.touch_out(exit_station)).to eq 4
   end
 
 end
