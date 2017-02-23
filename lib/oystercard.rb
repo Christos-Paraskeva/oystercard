@@ -2,7 +2,7 @@ require_relative 'station'
 require_relative 'journey'
 
 class Oystercard
-  attr_reader :balance, :station_history
+  attr_reader :balance, :station_history, :journey
 
 MAX_VALUE = 90
 MIN_BALANCE = 1
@@ -30,10 +30,10 @@ JOURNEY_COST = 1
     fare
   end
 
-  private
+  # private
 
   def fare
-    if (@journey.entry_station || @journey.exit_station) == nil
+    if @journey.entry_station == nil
       @balance -= 6
     else
       @balance -= JOURNEY_COST
