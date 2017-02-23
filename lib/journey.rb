@@ -1,6 +1,6 @@
 class Journey
 
-  attr_reader :entry_station, :exit_station, :station
+  attr_reader :entry_station, :exit_station, :station, :fare
 
   JOURNEY_COST = 1
 
@@ -18,6 +18,6 @@ class Journey
   end
 
   def fare
-    if (@entry_station == nil) then 6 else 1 end
+    (@entry_station == nil || @exit_station == nil) ? 6 : 1
   end
 end
