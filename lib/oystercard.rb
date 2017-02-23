@@ -19,7 +19,7 @@ JOURNEY_COST = 1
     @balance += value
   end
 
-  def touch_in(station)
+  def touch_in(station=nil)
     fail 'You have insufficient funds' if (balance < MIN_BALANCE)
     @journey = Journey.new(station)
   end
@@ -27,16 +27,6 @@ JOURNEY_COST = 1
   def touch_out(station)
     @journey.end_journey(station)
     @station_history << {@journey.entry_station => @journey.exit_station}
-    fare
-  end
-
-  # private
-
-  def fare
-    if @journey.entry_station == nil
-      @balance -= 6
-    else
-      @balance -= JOURNEY_COST
-    end
+    @balance -= @journey.fare
   end
 end
