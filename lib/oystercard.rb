@@ -25,12 +25,12 @@ class Oystercard
   def touch_out(station)
     @journey.end_journey(station)
     @station_history << {@journey.entry_station => @journey.exit_station}
-    deduct
+    deduct(@journey.fare)
   end
 
   private
 
-  def deduct(fare=@journey.fare)
+  def deduct(fare)
     @balance - fare
   end
 end

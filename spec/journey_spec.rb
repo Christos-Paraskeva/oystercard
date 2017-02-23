@@ -1,13 +1,13 @@
 require 'journey'
 
 describe Journey do
-  
+
   let(:entry_station) {double(:station)}
   let(:exit_station) {double(:station)}
   subject(:journey) {described_class.new(entry_station)}
 
   describe 'initialization' do
-    it "is initialized with complete = false by default " do
+  it "is initialized with complete = false by default " do
       expect(journey.complete?).to eq false
     end
   end
