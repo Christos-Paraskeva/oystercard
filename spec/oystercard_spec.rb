@@ -33,7 +33,7 @@ describe 'touching in and out' do
   it 'checks touching in adds the entry station to hash', :start => true do
     oystercard.touch_in(entry_station)
     oystercard.touch_out(exit_station)
-    expect(oystercard.station_history).to eq [{entry_station => exit_station }]
+    expect(oystercard.journey_log).to eq [{entry_station => exit_station }]
   end
 
   it 'minimum fare is deducted if there is an entry and exit station', :fare => true do

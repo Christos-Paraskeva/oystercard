@@ -26,19 +26,18 @@ describe Journey do
     expect(journey.exit_station).to eq exit_station
   end
 
-context 'calculate fare' do
+  context 'calculate fare' do
 
-  it 'minimum fare is deducted if there is an entry and exit station', :fare => true do
-    journey = Journey.new(entry_station)
-    journey.end_journey(exit_station)
-    expect(journey.fare).to eq 1
+    it 'minimum fare is deducted if there is an entry and exit station', :fare => true do
+      journey = Journey.new(entry_station)
+      journey.end_journey(exit_station)
+      expect(journey.fare).to eq 1
+    end
+
+    it 'penalty fare is deducted if there is no entry station on exit', :penalty => true do
+      journey = Journey.new(nil)
+      journey.end_journey(exit_station)
+      expect(journey.fare).to eq 6
+    end
   end
-
-  it 'penalty fare is deducted if there is no entry station on exit', :penalty => true do
-    journey = Journey.new(nil)
-    journey.end_journey(exit_station)
-    expect(journey.fare).to eq 6
-  end
-
-end
 end
