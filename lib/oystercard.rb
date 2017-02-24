@@ -10,7 +10,7 @@ class Oystercard
 
   def initialize
     @balance = 0
-
+    @journey = Journey.new
     @journeylog = JourneyLog.new
   end
 
@@ -27,6 +27,16 @@ class Oystercard
   def touch_out(station=:Euston)
     @journeylog.finish(station)
     # @journey_history << {@journey.entry_station => @journey.exit_station}
-    # @balance -= (@journey.fare)
+    deduct
+  end
+
+  def deduct
+    @balance - fare
+  end
+
+  private
+
+  def fare
+    (@journeylog.entry_station == nil || @journeylog.exit_station == nil) ? 6 : 1
   end
 end

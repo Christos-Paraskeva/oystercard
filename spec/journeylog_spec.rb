@@ -32,5 +32,11 @@ describe JourneyLog do
         subject.start(:Euston)
         expect(subject.journeys).to eq ([{:Acton => nil}])
       end
+      it 'marks a journey as complete when touch out', :touchin2 do
+        subject.finish(:Euston)
+        expect(subject.journeys).to eq ([{nil => :Euston}])
+
+
     end
+  end
 end

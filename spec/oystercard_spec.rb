@@ -37,14 +37,17 @@ describe 'touching in and out' do
   end
 
   it 'minimum fare is deducted if there is an entry and exit station', :fare => true do
-    oystercard.touch_in(:entry_station)
-    expect(oystercard.touch_out(exit_station)).to eq 9
+    oystercard = Oystercard.new
+    oystercard.top_up(10)
+    oystercard.touch_in
+    expect(subject.touch_out).to eq 9
   end
 
-
   it 'penalty fare is deducted if there is no entry station on exit', :penalty => true do
-    oystercard.touch_in(nil)
-    expect(oystercard.touch_out(exit_station)).to eq 4
+    oystercard = Oystercard.new
+    oystercard.top_up(10)
+    oystercard.touch_in
+    expect(subject.touch_out).to eq 4
   end
 end
 end
