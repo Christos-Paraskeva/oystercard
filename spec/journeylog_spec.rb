@@ -21,5 +21,16 @@ describe JourneyLog do
       oystercard.touch_out
       expect(subject.finish(:Euston)).to eq (:Euston)
     end
-  end
+     it 'returns incomplete or complete journey' do
+       subject.start(entry_station)
+       subject.finish(exit_station)
+       expect(subject.journeys).to eq ([{entry_station => exit_station}])
+     end
+
+      it 'marks a journey as complete when touch in twice', :touchin do
+        subject.start(:Acton)
+        subject.start(:Euston)
+        expect(subject.journeys).to eq ([{:Acton => nil}])
+      end
+    end
 end
